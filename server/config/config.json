@@ -1,0 +1,15 @@
+{
+    "development": {
+        "username": "postgres",
+        "password": "postgres1478",
+        "database": "parking_inspection",
+        "host": "127.0.0.1",
+        "dialect": "postgres"
+    },
+    "test": {
+
+    },
+    "production": {
+
+    }
+}

@@ -14,8 +14,8 @@ module.exports = {
         field: "full_name",
         allowNull: false,
       },
-      bageNumber: {
-        field: "bage_number",
+      badgeNumber: {
+        field: "badge_number",
         type: Sequelize.STRING,
         allowNull: false,
       },

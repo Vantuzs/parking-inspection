@@ -2,26 +2,27 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("park_officers", {
+    await queryInterface.createTable("images", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      fullName: {
-        type: Sequelize.STRING,
-        field: "full_name",
+      protocolId: {
+        field: "protocol_id",
+        type: Sequelize.INTEGER,
         allowNull: false,
+        references: {
+            model: {
+                tableName: 'protocols',
+                key: 'id'
+            }
+        }
       },
-      bageNumber: {
-        field: "bage_number",
+      path: {
         type: Sequelize.STRING,
-        allowNull: false,
-      },
-      district: {
-        type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
@@ -36,6 +37,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("park_officers");
+    await queryInterface.dropTable("images");
   },
 };

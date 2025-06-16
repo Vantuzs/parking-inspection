@@ -2,25 +2,34 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("park_officers", {
+    await queryInterface.createTable("protocols", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      fullName: {
-        type: Sequelize.STRING,
-        field: "full_name",
-        allowNull: false,
-      },
-      bageNumber: {
-        field: "bage_number",
+      serviceNotes: {
+        field: "service_notes",
         type: Sequelize.STRING,
         allowNull: false,
       },
-      district: {
-        type: Sequelize.STRING,
+      officerId: {
+        field: "officer_id",
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: {
+            tableName: "park_officers",
+            key: "id",
+          },
+        },
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      },
+      fineAmount: {
+        field: "fine_amount",
+        type: Sequelize.DOUBLE,
         allowNull: false,
       },
       createdAt: {
@@ -36,6 +45,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("park_officers");
+    await queryInterface.dropTable("protocols");
   },
 };

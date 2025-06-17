@@ -1,52 +1,36 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class ParkOfficer extends Model {
+  class Image extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate({ Protocol }) {
-      ParkOfficer.hasMany(Protocol, {
-        foreignKey: "officerId",
+      Image.belongsTo(Protocol, {
+        foreignKey: "protocolId",
       });
     }
   }
-  ParkOfficer.init(
+  Image.init(
     {
-      fullName: {
+      path: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
           notEmpty: true,
           notNull: true,
         },
-      },
-      badgeNumber: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notEmpty: true,
-          notNull: true,
-        },
-      },
-      district: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notEmpty: true,
-          notNull: true,
-        },
-      },
+      }
     },
     {
       sequelize,
-      modelName: "ParkOfficer",
-      tableName: "park_officers",
+      modelName: "Image",
+      tableName: "images",
       underscored: true,
       timestamps: true,
     }
   );
-  return ParkOfficer;
+  return Image;
 };

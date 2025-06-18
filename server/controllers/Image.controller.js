@@ -7,7 +7,7 @@ const createHttpError = require('http-errors');
 // deleteImageById 
 
 
-module.exports.getProtocoImages = async(req,res,next) =>{
+module.exports.getProtocolImages = async(req,res,next) =>{
     try {
         const {params: {protocolId}} = req;
 

@@ -7,8 +7,8 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({ ParckOfficer,Image }) {
-      Protocol.belongsTo(ParckOfficer, {
+    static associate({ ParkOfficer,Image }) {
+      Protocol.belongsTo(ParkOfficer, {
         foreignKey: "officerId",
       });
       Protocol.hasMany(Image,{

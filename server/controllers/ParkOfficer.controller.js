@@ -58,12 +58,13 @@ module.exports.updateParkOfficerById = async (req, res, next) => {
       body,
       params: { id },
     } = req;
-
+    console.log(12);
     const [count, [updatedParkOfficer]] = await ParkOfficer.update(body, {
       where: { id },
-      reutrning: true,
+      returning: true
     });
-
+    
+    
     if (count === 0) {
       return next(createHttpError(404, "Park officer not found"));
     }
@@ -86,7 +87,7 @@ module.exports.deleteParkOfficerById = async (req, res, next) => {
       return next(createHttpError(404, "Park officer not found"));
     }
 
-    return res.status(200);
+    return res.status(200).end();
   } catch (error) {
     next(error);
   }

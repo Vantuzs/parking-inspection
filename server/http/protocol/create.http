@@ -1,0 +1,9 @@
+POST http://localhost:5000/api/parkOfficers/1/protocols HTTP/1.1
+Content-Type: application/json
+
+{
+    "serviceNotes":"Bad face",
+    "fineAmount":450,
+    "violatorFullName":"Bad Guy",
+    "violatorPassportNumber":"6660666"
+}

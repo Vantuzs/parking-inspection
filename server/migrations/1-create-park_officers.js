@@ -18,6 +18,7 @@ module.exports = {
         field: "badge_number",
         type: Sequelize.STRING,
         allowNull: false,
+        unique: true
       },
       district: {
         type: Sequelize.STRING,

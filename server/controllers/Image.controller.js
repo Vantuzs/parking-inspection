@@ -64,7 +64,7 @@ module.exports.deleteImageById = async(req,res,next) =>{
             return next(createHttpError(404,'Image not found'));
         }
 
-        return res.status(200)
+        return res.status(200).end()
     } catch (error) {
         next(error)
     }

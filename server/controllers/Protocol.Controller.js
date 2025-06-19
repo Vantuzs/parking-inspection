@@ -10,17 +10,17 @@ const { Protocol, ParkOfficer, Image } = require("../models");
 module.exports.getAllProtocols = async (req, res, next) => {
   try {
     const { pagination } = req;
-    const protocols = await Protocol.fidAll({
+    const protocols = await Protocol.findAll({
       include: [
         {
           model: ParkOfficer,
           attributes: ["id", "full_name", "badge_number"],
-          as: "parkOfficer",
+          // as: "parkOfficer",
         },
         {
           model: Image,
           attributes: ["id", "path"],
-          as: "image",
+          // as: "image",
         },
       ],
       order: [["updated_at", "DESC"]],
@@ -50,12 +50,12 @@ module.exports.getAllProtocolsByOfficerId = async (req, res, next) => {
         {
           model: ParkOfficer,
           attributes: ["id", "full_name", "badge_number"],
-          as: "parkOfficer",
+          // as: "parkOfficer",
         },
         {
           model: Image,
           attributes: ["id", "path"],
-          as: "image",
+          // as: "image",
         },
       ],
       order: [["updated_at", "DESC"]],
@@ -74,9 +74,9 @@ module.exports.getAllProtocolsByOfficerId = async (req, res, next) => {
 
 module.exports.createProrocol = async (req, res, next) => {
   try {
-    const { body, files } = req;
+    const { body, files ,params: {officerId}} = req;
 
-    const createdProtocol = await Protocol.create(body);
+    const createdProtocol = await Protocol.create({...body,officerId});
 
     if (!createdProtocol) {
       return next(createHttpError(400, "Protocol not created"));
@@ -97,12 +97,12 @@ module.exports.createProrocol = async (req, res, next) => {
         {
           model: ParkOfficer,
           attributes: ["id", "full_name", "badge_number"],
-          as: "parkOfficer",
+          // as: "parkOfficer"
         },
         {
           model: Image,
           attributes: ["id", "path"],
-          as: "image",
+          // as: "image",
         },
       ],
       order: [["updated_at", "DESC"]],
@@ -118,10 +118,10 @@ module.exports.updateProtocolById = async (req, res, next) => {
     const {
       body,
       files,
-      params: { id },
+      params: { id,officerId },
     } = req;
 
-    const [count, [updatedProtocol]] = await Protocol.update(body, {
+    const [count, [updatedProtocol]] = await Protocol.update({...body,officerId}, {
       where: { id },
       returning: true,
     });
@@ -145,12 +145,12 @@ module.exports.updateProtocolById = async (req, res, next) => {
         {
           model: ParkOfficer,
           attributes: ["id", "full_name", "badge_number"],
-          as: "parkOfficer",
+          // as: "parkOfficer",
         },
         {
           model: Image,
           attributes: ["id", "path"],
-          as: "image",
+          // as: "image",
         },
       ],
       order: [["updated_at", "DESC"]],
@@ -167,7 +167,7 @@ module.exports.deleteProtocolById = async (req, res, next) => {
       params: { id },
     } = req;
 
-    const count = await Protocol.delete({
+    const count = await Protocol.destroy({
       where: { id },
     });
 

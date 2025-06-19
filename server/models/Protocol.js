@@ -1,5 +1,5 @@
 "use strict";
-const { Model } = require("sequelize");
+const { Model, INTEGER } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Protocol extends Model {
     /**
@@ -49,7 +49,7 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: true,
           notNull: true,
         },
-      },
+      }
     },
     {
       sequelize,

@@ -38,9 +38,9 @@ module.exports = {
         allowNull: false,
       },
       violatorPassportNumber: {
-        field: 'violarot_passport_number',
+        field: 'violator_passport_number',
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,

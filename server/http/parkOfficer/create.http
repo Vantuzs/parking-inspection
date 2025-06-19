@@ -2,7 +2,7 @@ POST http://localhost:5000/api/parkOfficers HTTP/1.1
 Content-Type: application/json
 
 {
-    "fullName":"Berin Kuno",
-    "badgeNumber":"198F32",
-    "district":"LosAngeles,Krin"
+    "fullName":"Werti Lu",
+    "badgeNumber":"56YXC2",
+    "district":"LosAngeles,Olis"
 }

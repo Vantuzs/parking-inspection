@@ -3,9 +3,11 @@ import styles from './ParkOfficer.module.scss'
 import { useDispatch } from 'react-redux';
 import { deleteParkOfficer,getParkOfficers,dismissParkOfficer } from '../../redux/slices/parkOfficerSlice';
 import DeleteConfirmation from '../Modals/DeleteConfirmation';
+import UpdateParkOfficer from '../Modals/UpdateParkOfficer';
 
 const ParkOfficer = ({ parkOfficer }) => {
     const [deleteConfirmationModalOpen, setDeleteConfirmationModalOpen] = useState(false)
+    const [updateParkOfficerModalOpen,setUpdateParkOfficerModalOpen] = useState(false)
     const dispatch = useDispatch();
 
     const deleteHandler = async() =>{
@@ -30,8 +32,13 @@ const ParkOfficer = ({ parkOfficer }) => {
             {deleteConfirmationModalOpen && <DeleteConfirmation open={deleteConfirmationModalOpen}
             setIsOpen={setDeleteConfirmationModalOpen}
             officerFullName={parkOfficer.fullName}
-            deleteCallback={deleteHandler}/>}
-            <button onClick={dismissHandler}>Dismiss</button>
+            deleteCallback={deleteHandler}/>
+            }
+
+            <button onClick={()=>setUpdateParkOfficerModalOpen(true)}>Edit</button>
+            {updateParkOfficerModalOpen && <UpdateParkOfficer open={updateParkOfficerModalOpen} setIsOpen={setUpdateParkOfficerModalOpen} officer={parkOfficer}/>}
+            
+            {parkOfficer.isWorked && <button onClick={dismissHandler}>Dismiss</button>}
         </article>
     );
 }

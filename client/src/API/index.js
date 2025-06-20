@@ -11,3 +11,5 @@ export const deleteParkOfficer = async(parkOfficerId)=> await httpClient.delete(
 export const dismissParkOfficer = async(parkOfficerId) => await httpClient.put(`/parkOfficers/${parkOfficerId}/dismiss`)
 
 export const createParkOfficer = async(body) => await httpClient.post('/parkOfficers',body)
+
+export const updateParkOfficer = async(parkOfficerId,updatedData) => await httpClient.put(`parkOfficers/${parkOfficerId}`,updatedData)

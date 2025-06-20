@@ -18,6 +18,28 @@ const getParkOfficers = createAsyncThunk(
   }
 );
 
+const deleteParkOfficer = createAsyncThunk(
+  `${SLICE_NAME}/deleteParkOfficer`,
+  async (parkOfficerId,thunkAPI) =>{
+    try {
+      await API.deleteParkOfficer(parkOfficerId);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+)
+
+const dismissParkOfficer = createAsyncThunk(
+  `${SLICE_NAME}/dismissParkOfficer`,
+  async (parkOfficerId,thunkAPI) =>{
+    try {
+      await API.dismissParkOfficer(parkOfficerId);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+)
+
 const initialState = {
   parkOfficers: [],
   isLoading: false,
@@ -42,11 +64,41 @@ const parkOfficerSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     });
+
+    builder.addCase(deleteParkOfficer.pending,(state,action)=>{
+      state.isLoading = true;
+      state.error = null;
+    })
+
+    builder.addCase(deleteParkOfficer.fulfilled,(state,action)=>{
+      state.isLoading = false;
+      state.error = null;
+    })
+
+    builder.addCase(deleteParkOfficer.rejected,(state,action)=>{
+      state.isLoading = false;
+      state.error = action.payload;
+    })
+
+    builder.addCase(dismissParkOfficer.pending,(state,action)=>{
+      state.isLoading = true;
+      state.error = null;
+    })
+
+    builder.addCase(dismissParkOfficer.fulfilled,(state,action)=>{
+      state.isLoading = false;
+      state.error = null;
+    })
+
+    builder.addCase(dismissParkOfficer.rejected,(state,action)=>{
+      state.isLoading = false;
+      state.error = action.payload;
+    })
   },
 });
 
 const { reducer } = parkOfficerSlice;
 
-export { getParkOfficers };
+export { getParkOfficers,deleteParkOfficer,dismissParkOfficer };
 
 export default reducer;

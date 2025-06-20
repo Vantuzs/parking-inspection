@@ -3,11 +3,13 @@ import {useDispatch,useSelector} from 'react-redux';
 import { getParkOfficers } from '../../redux/slices/parkOfficerSlice';
 import ParkOfficer from '../../components/ParkOfficer/ParkOfficer';
 import styles from './ParkOfficersPage.module.scss'
+import CreateParkOfficer from '../../components/Modals/CreateParkOfficer';
 
 const ParkOfficersPage = () => {
     const {parkOfficers,isLoading,error} = useSelector((state)=> state.parkOfficers);
     const dispatch = useDispatch();
     const [searchValue,setSearchValue] = useState('')
+    const [createParkOfficerModalOpen,setCreateParkOfficerModalOpen] = useState(false)
 
     
     useEffect(()=>{
@@ -41,9 +43,11 @@ const ParkOfficersPage = () => {
              onChange={({target:{value}})=>setSearchValue(value)}
              placeholder='Search'
             />
+            <button onClick={()=>setCreateParkOfficerModalOpen(true)}>Create officer</button>
             <div>
             {parkOfficersCards}
             </div>
+            {createParkOfficerModalOpen && <CreateParkOfficer open={createParkOfficerModalOpen} setIsOpen={setCreateParkOfficerModalOpen}/>}
         </section>
     );
 }

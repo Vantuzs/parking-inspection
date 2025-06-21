@@ -1,0 +1,25 @@
+.nav-list {
+    font-size: 2em;
+    background-color: rgb(135, 226, 230);
+    ul{
+        margin: 0px;
+        margin-bottom: 10px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        li{
+            color: red;
+            padding: 20px;
+            list-style-type: none;
+            a{
+                padding: 20px;
+                text-decoration: none;
+                color:rgb(57, 75, 90);
+            }
+            &:hover{
+                background-color: rgb(106, 206, 211);
+            }
+        }
+    }
+
+}

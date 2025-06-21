@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector,useDispatch } from 'react-redux';
 import { getAllProtocols } from '../../redux/slices/protocolSlice';
 import Protocol from '../../components/Prorocol/Protocol';
+import style from './ProtocolsPage.module.scss'
 
 const ProtocolsPage = () => {
     const {protocols,isLoading,error} = useSelector((state)=> state.protocols);
@@ -22,9 +23,9 @@ const ProtocolsPage = () => {
     const protocolWrst = protocols.map(currentProtocol=>(<Protocol protocol={currentProtocol} key={currentProtocol.id}/>))
 
     return (
-        <section>
+        <section >
             <input type='text'/>
-            <div>
+            <div className={style.div}>
                 {protocolWrst}
             </div>
         </section>

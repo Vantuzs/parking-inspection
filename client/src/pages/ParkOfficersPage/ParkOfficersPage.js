@@ -44,7 +44,7 @@ const ParkOfficersPage = () => {
              placeholder='Search'
             />
             <button onClick={()=>setCreateParkOfficerModalOpen(true)}>Create officer</button>
-            <div>
+            <div className={styles.div}>
             {parkOfficersCards}
             </div>
             {createParkOfficerModalOpen && <CreateParkOfficer open={createParkOfficerModalOpen} setIsOpen={setCreateParkOfficerModalOpen}/>}

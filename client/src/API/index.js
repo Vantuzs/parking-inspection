@@ -13,3 +13,7 @@ export const dismissParkOfficer = async(parkOfficerId) => await httpClient.put(`
 export const createParkOfficer = async(body) => await httpClient.post('/parkOfficers',body)
 
 export const updateParkOfficer = async(parkOfficerId,updatedData) => await httpClient.put(`parkOfficers/${parkOfficerId}`,updatedData)
+
+// ProtoclAPI
+
+export const getAllProtocols = async()=> await httpClient.get('parkOfficers/protocols')

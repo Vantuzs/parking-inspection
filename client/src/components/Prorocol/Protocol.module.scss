@@ -1,0 +1,8 @@
+@use '../../common/styles/template';
+
+.card-wrapper {
+    @extend %card-wrapper;
+    img {
+        width: 250px;
+    }
+}

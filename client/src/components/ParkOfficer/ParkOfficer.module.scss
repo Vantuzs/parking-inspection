@@ -1,13 +1,5 @@
-article {
-    border: 2px solid black;
-    margin: 15px;
-    padding: 15px;
-    width: 300px;
-    height: fit-content;
-    border-radius: 3px;
-    transition: box-shadow 0.3s, background-color 1s ease,border-radius 0.7s ease;
-}
-article:hover{
-    border-radius: 7px;
-    box-shadow: 3px 4px 10px rgba(0,0,0,0.6);
+@use '../../common/styles/template';
+
+.card-wrapper {
+    @extend %card-wrapper
 }

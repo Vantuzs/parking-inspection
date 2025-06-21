@@ -19,7 +19,7 @@ const Protocol = ({ protocol }) => {
 
       <p>Violator: {protocol.violatorFullName}</p>
       <p>Violator passport: {protocol.violatorPassportNumber}</p>
-      <p>Service notes: {protocol.serviceNote}</p>
+      <p>Service notes: {protocol.serviceNotes}</p>
       <h3>Fine amount: {protocol.fineAmount}</h3>
       <p>Created at: {protocol.createdAt}</p>
       <p>Updated at: {protocol.updatedAt}</p>

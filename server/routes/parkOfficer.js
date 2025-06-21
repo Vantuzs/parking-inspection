@@ -3,11 +3,15 @@ const parkOfficerRouter = require('express').Router();
 const imageRouter = require('./image');
 const protocolRouter = require('./protocol');
 const ParkOfficerController = require('../controllers/ParkOfficer.controller');
+const ProtocolController = require('../controllers/Protocol.Controller')
 
 parkOfficerRouter
 .route('/')
 .get(ParkOfficerController.getAllParkOfficers)
 .post(ParkOfficerController.createParkOfficer);
+
+parkOfficerRouter.route('/protocols')
+.get(ProtocolController.getAllProtocols)
 
 parkOfficerRouter
 .route('/:id')

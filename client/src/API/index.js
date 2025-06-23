@@ -42,4 +42,6 @@ export const deleteProtocol = async (parkOfficerId, protocolId) =>
     await httpClient.post(`/parkOfficers/protocols/${protocolId}/images`,images)
   }
 
-  
+  export const deleteProtocolImageById = async(protocolId,imageId) =>{
+    await httpClient.delete(`/parkOfficers/protocols/${protocolId}/images/${imageId}` )
+  }

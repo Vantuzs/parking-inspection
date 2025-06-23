@@ -19,60 +19,73 @@ const getAllProtocols = createAsyncThunk(
 );
 
 const deleteProtocolById = createAsyncThunk(
-    `${SLICE_NAME}/deleteProtocolById`,
-    async({parkOfficerId,protocolId},thunkAPI)=>{
-        try {
-            await API.deleteProtocol(parkOfficerId,protocolId)
-        } catch (error) {
-            return thunkAPI.rejectWithValue(error.response.data);
-        }
+  `${SLICE_NAME}/deleteProtocolById`,
+  async ({ parkOfficerId, protocolId }, thunkAPI) => {
+    try {
+      await API.deleteProtocol(parkOfficerId, protocolId);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
     }
-)
+  }
+);
 
 const createProtocol = createAsyncThunk(
   `${SLICE_NAME}/createProtocol`,
-  async({parkOfficerId,protocolBody},thunkAPI) =>{
+  async ({ parkOfficerId, protocolBody }, thunkAPI) => {
     try {
-      await API.createProtocol(parkOfficerId,protocolBody);
+      await API.createProtocol(parkOfficerId, protocolBody);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
-)
+);
 
 const getAllProtocolsById = createAsyncThunk(
   `${SLICE_NAME}getAllProtocolsById`,
-  async(parkOfficerId,thunkAPI) =>{
+  async (parkOfficerId, thunkAPI) => {
     try {
-      const {data: {data: protocols}} = await API.getAllProtocolsById(parkOfficerId)
-      return protocols
+      const {
+        data: { data: protocols },
+      } = await API.getAllProtocolsById(parkOfficerId);
+      return protocols;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
-)
+);
 
 const updateProtocolById = createAsyncThunk(
   `${SLICE_NAME}/updateProtocolById`,
-  async({parkOfficerId,protocolId,protocolBody},thunkAPI)=>{
+  async ({ parkOfficerId, protocolId, protocolBody }, thunkAPI) => {
     try {
-      await API.updateProtocolById(parkOfficerId,protocolId,protocolBody)
+      await API.updateProtocolById(parkOfficerId, protocolId, protocolBody);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
-)
+);
 
 const addImagesToProtocol = createAsyncThunk(
   `${SLICE_NAME}/addImagesToProtocol`,
-  async({protocolId,images},thunkAPI)=>{
+  async ({ protocolId, images }, thunkAPI) => {
     try {
-      await API.addProtocolImages(protocolId,images)
+      await API.addProtocolImages(protocolId, images);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
-)
+);
+
+const deletePorotocolImageById = createAsyncThunk(
+  `${SLICE_NAME}/deletePorotocolImageById`,
+  async ({ protocolId, imageId }, thunkAPI) => {
+    try {
+      await API.deleteProtocolImageById(protocolId, imageId);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
 
 const initialState = {
   protocols: [],
@@ -163,11 +176,32 @@ const protocolSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     });
+
+    builder.addCase(deletePorotocolImageById.pending, (state, action) => {
+      state.error = null;
+      state.isLoading = true;
+    });
+    builder.addCase(deletePorotocolImageById.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.error = null;
+    });
+    builder.addCase(deletePorotocolImageById.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    });
   },
 });
 
 const { reducer } = protocolSlice;
 
-export { getAllProtocols,deleteProtocolById,createProtocol,getAllProtocolsById,updateProtocolById,addImagesToProtocol};
+export {
+  getAllProtocols,
+  deleteProtocolById,
+  createProtocol,
+  getAllProtocolsById,
+  updateProtocolById,
+  addImagesToProtocol,
+  deletePorotocolImageById,
+};
 
 export default reducer;

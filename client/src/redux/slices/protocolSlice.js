@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as API from "../../API";
-import * as FETCH_API from '../../API/uploadImage'
 
 const SLICE_NAME = "protocol";
 
@@ -68,7 +67,7 @@ const addImagesToProtocol = createAsyncThunk(
   `${SLICE_NAME}/addImagesToProtocol`,
   async({protocolId,images},thunkAPI)=>{
     try {
-      await FETCH_API.addProtocolImages(protocolId,images)
+      await API.addProtocolImages(protocolId,images)
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
     }

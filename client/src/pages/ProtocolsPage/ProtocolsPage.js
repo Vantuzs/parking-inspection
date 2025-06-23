@@ -12,12 +12,16 @@ const ProtocolsPage = () => {
     const dispatch = useDispatch();
     const [searchValue,setSearchValue] = useState('');
 
-    useEffect(()=>{
-        if(parkOfficerId){
-            dispatch(getAllProtocolsById(parkOfficerId));
+    const refreshProtocolsList = async()=>{
+         if(parkOfficerId){
+            await dispatch(getAllProtocolsById(parkOfficerId));
         } else {
-            dispatch(getAllProtocols());
+            await dispatch(getAllProtocols());
         }
+    }
+
+    useEffect(()=>{
+        refreshProtocolsList()
     },[])
 
     if(isLoading){
@@ -60,7 +64,7 @@ const ProtocolsPage = () => {
 
     // const filtredProtocols = protocols.filter(({ violatorFullName, violatorPassportNumber,ParkOfficer: {full_name,badge_number}})=>);
 
-    const protocolWrst = filterProtocols(protocols,searchValue).map(currentProtocol=>(<Protocol protocol={currentProtocol} key={currentProtocol.id}/>))
+    const protocolWrst = filterProtocols(protocols,searchValue).map(currentProtocol=>(<Protocol protocol={currentProtocol} key={currentProtocol.id} refreshProtocolsList={refreshProtocolsList}/>))
 
     return (
         <section >

@@ -13,7 +13,7 @@ import "slick-carousel/slick/slick-theme.css";
 import UpdateProtocolById from "../Modals/UpdateProtocolById";
 import AddImage from "../Modals/AddImage";
 
-const Protocol = ({ protocol }) => {
+const Protocol = ({ protocol,refreshProtocolsList }) => {
   const dispatch = useDispatch();
   const {parkOfficerId,parkOfficerFullName} = useParams();
   const [deleteConfirmationModalOpen,setDeleteConfirmationModalOpen] = useState(false)
@@ -56,7 +56,8 @@ const Protocol = ({ protocol }) => {
 
       <button onClick={()=>setAddImagesModalOpen(true)}>Add images</button>
       {addImagesModalOpen && <AddImage open={addImagesModalOpen} setIsOpen={setAddImagesModalOpen} 
-      protocolId={protocol.id}/>}
+      protocolId={protocol.id}
+      refreshProtocolsList={refreshProtocolsList}/>}
 
       {protocol.Images.length > 1 ? (
         <Slider {...settings} className={styles.slider}>

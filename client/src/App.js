@@ -17,6 +17,7 @@ function App() {
      <Routes>
       <Route path="/" element={<ParkOfficersPage/>}/>
       <Route path="/protocols" element={<ProtocolsPage/>}/>
+      <Route path="/protocols/:parkOfficerId/:parkOfficerFullName" element={<ProtocolsPage/>}/>
      </Routes>
     </BrowserRouter>
   );

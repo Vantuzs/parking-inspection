@@ -120,11 +120,13 @@ module.exports.updateProtocolById = async (req, res, next) => {
       files,
       params: { id,officerId },
     } = req;
-
-    const [count, [updatedProtocol]] = await Protocol.update({...body,officerId}, {
+     
+    
+      const [count, [updatedProtocol]] = await Protocol.update({...body,officerId}, {
       where: { id },
       returning: true,
     });
+    
 
     if (files?.length) {
       const images = files.map((file) => ({

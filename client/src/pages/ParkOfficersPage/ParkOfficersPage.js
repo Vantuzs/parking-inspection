@@ -23,6 +23,8 @@ const ParkOfficersPage = () => {
     if(error){
         return <div>ERROR HAPPEND</div>
     }
+
+    // const preFilterParkOfficers = parkOfficers.filter(({})=>)
     
     const filtredParkOfficers = parkOfficers.filter(({fullName,badgeNumber,district})=>
         fullName.toLowerCase().includes(searchValue.toLowerCase())
@@ -44,8 +46,14 @@ const ParkOfficersPage = () => {
              placeholder='Search'
             />
             <button onClick={()=>setCreateParkOfficerModalOpen(true)}>Create officer</button>
+            <select>
+                <option>All officers</option>
+                <option>Works officers</option>
+                <option>Dismiss officer</option>
+            </select>
             <div className={styles.div}>
             {parkOfficersCards}
+            {console.log(parkOfficersCards)}
             </div>
             {createParkOfficerModalOpen && <CreateParkOfficer open={createParkOfficerModalOpen} setIsOpen={setCreateParkOfficerModalOpen}/>}
         </section>

@@ -24,6 +24,7 @@ module.exports.getProtocolImages = async(req,res,next) =>{
 module.exports.addProtocolImage = async(req,res,next) =>{
     try {
         const {files, params: {protocolId}} = req;
+        console.log(files);
 
         const images = files.map(file=>({
             path: file.filename,

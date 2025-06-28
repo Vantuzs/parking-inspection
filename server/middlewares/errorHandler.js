@@ -1,4 +1,5 @@
 const {Error: {ValidationError,CastError}} = require('mongoose');
+const {TokenExpiredError,JsonWebTokenError} = require('jsonwebtoken')
 
 module.exports = async (err, req, res, next) => {
   if(err instanceof ValidationError){
@@ -6,7 +7,11 @@ module.exports = async (err, req, res, next) => {
   }
 
   if(err instanceof CastError){
-    return res.satus(400).send(err.message)
+    return res.status(400).send(err.message)
+  }
+
+  if(err instanceof JsonWebTokenError || err instanceof TokenExpiredError){
+    return res.status(403).send('Invalid access token')
   }
   
   const code = err.status || 500;

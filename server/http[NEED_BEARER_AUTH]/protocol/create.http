@@ -1,4 +1,5 @@
 POST http://localhost:5000/api/parkOfficers/10/protocols HTTP/1.1
+Authorization: Bearer 
 Content-Type: application/json
 
 {

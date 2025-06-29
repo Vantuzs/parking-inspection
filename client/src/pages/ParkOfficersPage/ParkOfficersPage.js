@@ -44,7 +44,7 @@ const ParkOfficersPage = () => {
         <ul>
           <li><Link to='/'>Home</Link></li>
           <li><Link to='/officers'>Officers</Link></li>
-          <li><Link to='protocols'>Protocols</Link></li>
+          <li><Link to='/protocols'>Protocols</Link></li>
         </ul>
       </nav>
         <section>

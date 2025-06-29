@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import * as API from '../../API/authUserApi'
+import * as API from '../../API'
 import reducer from "./parkOfficerSlice";
 
 const SLICE_NAME = 'users';

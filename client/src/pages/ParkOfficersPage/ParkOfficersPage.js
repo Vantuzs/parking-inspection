@@ -1,4 +1,5 @@
 import React, {useEffect,useState} from 'react';
+import {Link} from 'react-router-dom'
 import {useDispatch,useSelector} from 'react-redux';
 import { getParkOfficers } from '../../redux/slices/parkOfficerSlice';
 import ParkOfficer from '../../components/ParkOfficer/ParkOfficer';
@@ -38,13 +39,21 @@ const ParkOfficersPage = () => {
 
 
     return (
+        <>
+        <nav className={styles['nav-list']}>
+        <ul>
+          <li><Link to='/'>Home</Link></li>
+          <li><Link to='/officers'>Officers</Link></li>
+          <li><Link to='protocols'>Protocols</Link></li>
+        </ul>
+      </nav>
         <section>
             <input 
              type='text'
              value={searchValue}
              onChange={({target:{value}})=>setSearchValue(value)}
              placeholder='Search'
-            />
+             />
             <button onClick={()=>setCreateParkOfficerModalOpen(true)}>Create officer</button>
             <select>
                 <option>All officers</option>
@@ -57,6 +66,7 @@ const ParkOfficersPage = () => {
             </div>
             {createParkOfficerModalOpen && <CreateParkOfficer open={createParkOfficerModalOpen} setIsOpen={setCreateParkOfficerModalOpen}/>}
         </section>
+             </>
     );
 }
 

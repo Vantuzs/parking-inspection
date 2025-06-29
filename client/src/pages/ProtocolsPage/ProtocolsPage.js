@@ -1,9 +1,10 @@
 import React, { useEffect,useState } from 'react';
 import { useSelector,useDispatch } from 'react-redux';
+import {Link} from 'react-router-dom'
 import { getAllProtocols,getAllProtocolsById } from '../../redux/slices/protocolSlice';
 import Protocol from '../../components/Prorocol/Protocol';
 import {useParams} from 'react-router-dom'
-import style from './ProtocolsPage.module.scss'
+import styles from './ProtocolsPage.module.scss'
 
 
 const ProtocolsPage = () => {
@@ -67,17 +68,26 @@ const ProtocolsPage = () => {
     const protocolWrst = filterProtocols(protocols,searchValue).map(currentProtocol=>(<Protocol protocol={currentProtocol} key={currentProtocol.id} refreshProtocolsList={refreshProtocolsList}/>))
 
     return (
+        <>
+        <nav className={styles['nav-list']}>
+                <ul>
+                  <li><Link to='/'>Home</Link></li>
+                  <li><Link to='/officers'>Officers</Link></li>
+                  <li><Link to='protocols'>Protocols</Link></li>
+                </ul>
+              </nav>
         <section >
             <input type='text'
             value={searchValue}
             onChange={({target:{value}})=>setSearchValue(value)}
             placeholder='Search'
-             />
+            />
              <p>{parkOfficerFullName? `${parkOfficerFullName}|Protocols`:'All Protocols'}</p>
-            <div className={style.div}>
+            <div className={styles.div}>
                 {protocolWrst}
             </div>
         </section>
+            </>
     );
 }
 

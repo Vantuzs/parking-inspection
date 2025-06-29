@@ -30,83 +30,122 @@ export const deleteProtocol = async (parkOfficerId, protocolId) =>
     `/parkOfficers/${parkOfficerId}/protocols/${protocolId}`
   );
 
-  export const createProtocol = async (parkOfficerId,protocolBody) =>
-    await httpClient.post(`/parkOfficers/${parkOfficerId}/protocols/`,protocolBody)
+export const createProtocol = async (parkOfficerId, protocolBody) =>
+  await httpClient.post(
+    `/parkOfficers/${parkOfficerId}/protocols/`,
+    protocolBody
+  );
 
-  export const getAllProtocolsById = async (parkOfficerId) => 
-    await httpClient.get(`/parkOfficers/${parkOfficerId}/protocols/`)
+export const getAllProtocolsById = async (parkOfficerId) =>
+  await httpClient.get(`/parkOfficers/${parkOfficerId}/protocols/`);
 
-  export const updateProtocolById = async(parkOfficerId,protocolId,protocolBody) =>
-    await httpClient.put(`/parkOfficers/${parkOfficerId}/protocols/${protocolId}`,protocolBody)
+export const updateProtocolById = async (
+  parkOfficerId,
+  protocolId,
+  protocolBody
+) =>
+  await httpClient.put(
+    `/parkOfficers/${parkOfficerId}/protocols/${protocolId}`,
+    protocolBody
+  );
 
-  export const addProtocolImages = async (protocolId,images) =>{
-    await httpClient.post(`/parkOfficers/protocols/${protocolId}/images`,images)
+export const addProtocolImages = async (protocolId, images) => {
+  await httpClient.post(`/parkOfficers/protocols/${protocolId}/images`, images);
+};
+
+export const deleteProtocolImageById = async (protocolId, imageId) => {
+  await httpClient.delete(
+    `/parkOfficers/protocols/${protocolId}/images/${imageId}`
+  );
+};
+
+// AUTH
+
+let geolocation;
+navigator.geolocation.getCurrentPosition(
+  ({ coords: { latitude, longitude } }) => {
+    geolocation = `${latitude} ${longitude}`;
   }
+);
 
-  export const deleteProtocolImageById = async(protocolId,imageId) =>{
-    await httpClient.delete(`/parkOfficers/protocols/${protocolId}/images/${imageId}` )
-  }
+export const loginUser = async (userData) =>
+  await httpClient.post("/users/sign-in", {
+    ...userData,
+    geolocation,
+  });
 
-  // AUTH
-  export const loginUser = async (userData) =>
-    await httpClient.post("/users/sign-in", userData);
-  
-  export const registerUser = async (userData) =>
-    await httpClient.post("/users/sign-up", userData);
+export const registerUser = async (userData) =>
+  await httpClient.post("/users/sign-up", {
+    ...userData,
+    geolocation,
+  });
 
+// TOKENS
 
-  // TOKENS
+export const authUser = async () => {
+  await httpClient.get("/users");
+};
 
-  export const authUser = async() =>{
-    await httpClient.get('/users')
-  }
+export const refreshUser = async () => {
+  const refreshToken = localStorage.getItem("refreshToken");
 
-  export const refreshUser = async () =>{
-    const refreshToken = localStorage.getItem('refreshToken');
+  const { data } = await httpClient.post("/users/refresh", {
+    refreshToken,
+    geolocation,
+  });
 
-    const {data} = await httpClient.post('/users/refresh',{refreshToken})
+  return data;
+};
 
-    return data
-  }
+httpClient.interceptors.request.use(
+  (config) => {
+    const accessToken = localStorage.getItem("accessToken");
 
-  httpClient.interceptors.request.use((config)=>{
-    const accessToken = localStorage.getItem('accessToken');
-
-    if(accessToken){
+    if (accessToken) {
       config.headers = {
         ...config.headers,
-        Authorization: `Bearer ${accessToken}`
-      }
+        Authorization: `Bearer ${accessToken}`,
+      };
     }
 
     return config;
-  },(err)=> Promise.reject(err))
+  },
+  (err) => Promise.reject(err)
+);
 
-  httpClient.interceptors.response.use((response)=>{
-    const {data: {tokens}} = response;
+httpClient.interceptors.response.use(
+  (response) => {
+    const {
+      data: { tokens },
+    } = response;
 
-    if(tokens){
-      const {accessToken,refreshToken} =  tokens;
+    if (tokens) {
+      const { accessToken, refreshToken } = tokens;
 
-      localStorage.setItem('accessToken',accessToken)
-      localStorage.setItem('refreshToken',refreshToken)
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("refreshToken", refreshToken);
     }
 
-    return response
-  },async (err)=>{
-    const {response: {status},config} = err;
+    return response;
+  },
+  async (err) => {
+    const {
+      response: { status },
+      config,
+    } = err;
 
-    if(status === 403&& localStorage.getItem('refreshToken')){
+    if (status === 403 && localStorage.getItem("refreshToken")) {
       await refreshUser();
 
-      return await httpClient(config)
-    } else if(status === 401){
+      return await httpClient(config);
+    } else if (status === 401) {
       localStorage.clear();
-      history.push('/')
+      history.push("/");
     } else {
-      history.push('/')
-      return Promise.reject(err)
+      history.push("/");
+      return Promise.reject(err);
     }
 
-    return Promise.reject(err)
-  })
+    return Promise.reject(err);
+  }
+);

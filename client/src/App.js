@@ -1,13 +1,14 @@
 import ParkOfficersPage from "./pages/ParkOfficersPage/ParkOfficersPage";
 import ProtocolsPage from "./pages/ProtocolsPage/ProtocolsPage";
-import {BrowserRouter,Routes,Route, Link} from 'react-router-dom'
+import {unstable_HistoryRouter as HistoryRouter,Routes,Route, Link} from 'react-router-dom'
 import HomePage from "./pages/HomePage/HomePage";
 import styles from './App.module.scss'
+import history from "./BrowserHistory";
 
 
 function App() {
   return (
-    <BrowserRouter>
+    <HistoryRouter history={history}>
       {/* <nav className={styles['nav-list']}>
         <ul>
           <li><Link to='/'>Home</Link></li>
@@ -22,7 +23,7 @@ function App() {
       <Route path="/protocols" element={<ProtocolsPage/>}/>
       <Route path="/protocols/:parkOfficerId/:parkOfficerFullName" element={<ProtocolsPage/>}/>
      </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 

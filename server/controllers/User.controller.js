@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-const { User, RefreshToken } = require("../models/MongoDB");
+const { User, RefreshToken, Banlist } = require("../models/MongoDB");
 const {
   createAccessToken,
   createRefreshToken,
@@ -13,7 +13,7 @@ module.exports.registrationUser = async (req, res, next) => {
     const {
       body,
       passwordHash,
-      body: {geolocation},
+      body: { geolocation },
     } = req;
 
     const createdUser = await User.create({ ...body, passwordHash });
@@ -35,8 +35,8 @@ module.exports.registrationUser = async (req, res, next) => {
     await RefreshToken.create({
       token: refreshToken,
       userId: createdUser._id,
-      geolocation
-    })
+      geolocation,
+    });
 
     return res
       .status(201)
@@ -49,7 +49,7 @@ module.exports.registrationUser = async (req, res, next) => {
 module.exports.loginUser = async (req, res, next) => {
   try {
     const {
-      body: { email, password,geolocation },
+      body: { email, password, geolocation },
     } = req;
 
     const foundUser = await User.findOne({
@@ -77,10 +77,10 @@ module.exports.loginUser = async (req, res, next) => {
       });
 
       await RefreshToken.create({
-      token: refreshToken,
-      userId: foundUser._id,
-      geolocation
-    })
+        token: refreshToken,
+        userId: foundUser._id,
+        geolocation,
+      });
 
       return res
         .status(200)
@@ -111,7 +111,7 @@ module.exports.checkAuth = async (req, res, next) => {
 
 module.exports.refreshSession = async (req, res, next) => {
   const {
-    body: { refreshToken,geolocation },
+    body: { refreshToken, geolocation },
   } = req;
 
   let verufyResult;
@@ -137,16 +137,20 @@ module.exports.refreshSession = async (req, res, next) => {
           userId: user._id,
           email: user.email,
           role: user.role,
-          geolocation
+          geolocation,
         });
         const newRefreshToken = await createRefreshToken({
           userId: user._id,
           email: user.email,
           role: user.role,
-          geolocation
+          geolocation,
         });
 
-        await RefreshToken.create({ token: newRefreshToken, userId: user._id,geolocation });
+        await RefreshToken.create({
+          token: newRefreshToken,
+          userId: user._id,
+          geolocation,
+        });
         return res.status(200).send({
           tokens: {
             accessToken: newAccessToken,
@@ -155,9 +159,10 @@ module.exports.refreshSession = async (req, res, next) => {
         });
       }
     } else {
-      return next(createHttpError(401,'Token not Found'))
+      return next(createHttpError(401, "Token not Found"));
     }
   } catch (error) {
     next(error);
   }
 };
+

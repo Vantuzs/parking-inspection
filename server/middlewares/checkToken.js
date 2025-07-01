@@ -9,7 +9,7 @@ module.exports.checkToken = async(req,res,next) =>{
         }
         const [,token] = authorization.split(' ')
         const payload = await verifyAccessToken(token);
-
+        console.log(payload);
         req.tokenPayload = payload;
 
         next()

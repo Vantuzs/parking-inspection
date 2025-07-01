@@ -2,6 +2,7 @@ import ParkOfficersPage from "./pages/ParkOfficersPage/ParkOfficersPage";
 import ProtocolsPage from "./pages/ProtocolsPage/ProtocolsPage";
 import {unstable_HistoryRouter as HistoryRouter,Routes,Route, Link} from 'react-router-dom'
 import HomePage from "./pages/HomePage/HomePage";
+import AdminPanelPage from "./pages/AdminPanelPage/AdminPanelPage";
 import styles from './App.module.scss'
 import history from "./BrowserHistory";
 
@@ -22,6 +23,7 @@ function App() {
       <Route path="/officers" element={<ParkOfficersPage/>}/>
       <Route path="/protocols" element={<ProtocolsPage/>}/>
       <Route path="/protocols/:parkOfficerId/:parkOfficerFullName" element={<ProtocolsPage/>}/>
+      <Route path="/admin" element={<AdminPanelPage/>}/>
      </Routes>
     </HistoryRouter>
   );

@@ -80,6 +80,13 @@ export const registerUser = async (userData) =>
     geolocation,
   });
 
+// ADMIN
+
+export const getAllUsers = async () => await httpClient.get("/users/all");
+
+export const getAllBannedUsers = async () =>
+  await httpClient.get("/users/all/banned");
+
 // TOKENS
 
 export const authUser = async () => {
